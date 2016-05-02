@@ -1,0 +1,16 @@
+#bg1 {
+    background: black;
+}
+
+#bg2 {
+    background: red;
+}
+
+.cards {
+    width: 250px;
+    height: 363px;
+}
+
+.top-buffer {
+    margin-top: 20px;
+}

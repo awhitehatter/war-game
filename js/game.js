@@ -2,6 +2,7 @@
 //Set variables to hold scores
 var computerScore = 0;
 var playerScore = 0;
+var loot = [];
 
 //Named array to hold cards
 var cards = [];
@@ -40,14 +41,89 @@ function start(){
     
     player = cards.splice(0, Math.floor(cards.length / 2));
     computer = cards;
-    console.log(player);
-    console.log(computer);
 }
 
+//Function to be called in a 'war'
+function war(computerHand, playerHand){
+    var numCards = 4;
+    var hand = [];
+    hand.push(computerHand, playerHand);
+
+    //Surrender if less than 4 cards
+    if (computer.length < 4) {
+        numCards = computer.length;
+        console.log('Lowered number of War Cards to ' + numCards);
+        }
+    else if (player.length < 4 ){
+        numCards = player.length;
+        console.log('Lowered number of War Cards to ' + numCards);
+        }
+
+    //draw 4 cards from each player
+    for (i = 0; i < numCards; i++){
+        hand.push(computer.pop());
+        hand.push(player.pop());
+    }
+
+    if (loot != "") {
+        for (i=1; i < (loot.length + 2) * 4; i++){
+            hand.unshift(loot.pop());
+        }
+    }
+
+    //Construct thumbnail images for hand, to be displayed at the end of war
+    cardThumbs = [];
+
+    for (i = 1; i < hand.length + 1; i++) {
+        cardThumbs.push("cards/" + hand[hand.length - i][0] + '-' + hand[hand.length - i][1] + '.png');
+    }
+
+    console.log('war hand: ' + hand);
+
+    if (hand[hand.length-1][0] == hand[hand.length-2][0]) {
+        //tie, declare another war
+        console.log('We had a tie in the war.');
+
+        //dump hand in to loot for keeping
+        var cmpHand = hand[hand.length - 2];
+        var plyHand = hand[hand.length - 1];
+        for (i=0; i<(hand.length - 1) * 4; i++){
+            loot.push(hand.shift());
+        }
+
+        hand = [];
+        war(cmpHand, plyHand)
+
+    } else if (hand[hand.length-1][0] > hand[hand.length-2][0]){
+        //player wins
+        for (i = 1; i < (hand.length + 2) * 4; i++) {
+            player.unshift(hand.pop());
+        }
+        modalText = "W00t! You won a war. Here's your loot:";
+    } else if (hand[hand.length-1][0] < hand[hand.length-2][0]) {
+        //computer wins
+        for (i = 1; i < (hand.length + 2) * 4; i++) {
+            computer.unshift(hand.pop());
+        }
+        modalText = "Ouch! You lost a war. Here's their loot:";
+    }
+}
 
 //Gameplay Logic
 function play(){
     var status = '';
+
+    //Check to make sure the game isn't over:
+    if (player.length === 0 || computer.length === 0) {
+        status = "game";
+        if (player.length === 0) {
+            modalText = "Congrats! You won!"
+        } else {
+            modalText = "You Lost. Better Luck Next time!"
+        }
+        return status;
+    }
+
     //Build the round hand
     hand = [];
     hand.push(player.pop());
@@ -72,30 +148,11 @@ function play(){
         computer.unshift(hand[0],hand[1]);
         //shuffle(computer);
     }
-    else if (player.length === 0 || computer.length === 0) {
-        status = "game";
-    }
+
+
+    console.log('Player Cards Left: ' + player.length);
+    console.log('Computer Cards Left: ' + computer.length);
     return status;
 
 }
 
-function war(computerHand, playerHand){
-    hand = [computerHand, playerHand];
-    for (i = 0; i < 4; i++){
-        hand.push(player.pop());
-        hand.push(computer.pop());
-    }
-    if (hand[hand.length-1][0] == hand[hand.length-2][0]) {
-        //declare another war
-    } else if (hand[hand.length-1][0] > hand[hand.length-2][0]){
-        //player wins
-        for (i = 0, i < hand.length; i++;) {
-            player.unshift(hand[i]);
-        }
-    } else if (hand[hand.length-1][0] < hand[hand.length-2][0]) {
-        //computer winds
-        for (i = 0, i < hand.length; i++;) {
-            computer.unshift(hand[i]);
-        }
-    }
-}

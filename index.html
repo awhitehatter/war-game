@@ -19,7 +19,7 @@
 <div class="container-fluid">
     <div class="row">
         <button type="button" id="start-button" class="btn btn-success navbar-light">Start</button>
-        <button type="button" class="btn btn-danger navbar-light">Reset</button>
+        <button type="button" class="btn-reset btn btn-danger navbar-light">Reset</button>
     </div>
     <div class="row">
     <div class="col-sm-6 text-sm-right">
@@ -44,7 +44,51 @@
             <button type="button" id="play-button" class="btn btn-primary btn-lg btn-block">Play!</button>
                 </div>
         </div>
+        <!--Below is the War Modal, which will contain the War results-->
 
-</div>
+        <!-- Modal -->
+        <div class="modal" id="warModal" tabindex="-1" role="dialog" aria-labelledby="WarModal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel1">War Status</h4>
+                    </div>
+                    <div class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Below is the War Modal, which will contain the End of Game Announcement-->
+
+        <!-- Modal -->
+        <div class="modal" id="gameModal" tabindex="-1" role="dialog" aria-labelledby="GameModal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <h4 class="modal-title" id="gameEnder">War Status</h4>
+                    </div>
+                    <div class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary btn-reset">Play again?</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div></div>
 </body>
 </html>

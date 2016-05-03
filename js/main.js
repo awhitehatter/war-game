@@ -3,7 +3,9 @@ var player = [];
 var computer = [];
 var playerCardImg = "";
 var computerCardImg = "";
-var cards = [];
+var modalText = "";
+var cardThumbs = [];
+
 
 $(document).ready( function(){
     //custom plugin to update the scoreboard
@@ -19,7 +21,7 @@ $(document).ready( function(){
     
     //monitor scoreboard to enable/disable buttons
     setInterval(function () {
-        if (playerScore === 0 && computerScore === 0) {
+        if (playerScore === 0 || computerScore === 0) {
             $('#play-button').addClass("disabled");
         } else {
             $('#start-button').addClass("disabled");
@@ -46,12 +48,20 @@ $(document).ready( function(){
         //Update round status:
         if (x == "war"){
             $('#status').text('Round Status: WAR!!!').css('color', 'red');
+            $('.modal-body').text(modalText).append("<br />");
+            $.each(cardThumbs, function ( index, value ){
+               $('.modal-body').append("<img class=\"cards-thumbs\" src=" + value + ">")
+            });
+            $('#warModal').modal('show');
         } else if( x == "player"){
             $('#status').text('Round Status: WIN').css('color', 'black');
+            playerScore = 0;
         } else if( x == "computer"){
             $('#status').text('Round Status: LOSS').css('color', 'black');
         } else if( x == "game"){
             $('#status').text('Round Status: That\'s Game!').css('color','black');
+            $('.modal-body').text(modalText)
+            $('#gameModal').modal('show');
         }
 
         //update the scoreboard
@@ -59,6 +69,10 @@ $(document).ready( function(){
         computerScore = computer.length;
         $('body').scoreboard();
     });
+
+    $('.btn-reset').click(function() {
+        location.reload();
+    })
 
 });
 

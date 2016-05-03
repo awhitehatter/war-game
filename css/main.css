@@ -11,6 +11,10 @@
     height: 363px;
 }
 
+.cards-thumbs {
+    width: 75px;
+}
+
 .top-buffer {
     margin-top: 20px;
 }
